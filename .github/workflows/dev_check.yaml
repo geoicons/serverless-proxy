@@ -1,0 +1,14 @@
+name: "Dev Check"
+
+on:
+    pull_request:
+        branches:
+            - main
+
+jobs:
+    check:
+        uses: ./.github/workflows/check_base.yaml
+        with:
+            working-directory: .
+            environment: "dev"
+            aws-region: "ap-southeast-2"

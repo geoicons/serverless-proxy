@@ -1,0 +1,18 @@
+{
+    "compilerOptions": {
+        "allowJs": false,
+        "alwaysStrict": true,
+        "esModuleInterop": true,
+        "experimentalDecorators": true,
+        "forceConsistentCasingInFileNames": true,
+        "lib": ["ES2019", "dom"],
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "pretty": true,
+        "resolveJsonModule": true,
+        "strict": true,
+        "suppressImplicitAnyIndexErrors": false,
+        "target": "ES6",
+        "baseUrl": "./"
+    }
+}

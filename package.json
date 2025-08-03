@@ -1,0 +1,76 @@
+{
+  "name": "geoicons-serverless-proxy",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Serverless Proxy",
+  "author": "Geoicons",
+  "license": "GPL-3.0",
+  "scripts": {
+    "build": "tsc",
+    "test": "jest",
+    "build_lambda_api": "yarn --cwd src/lambda_api build",
+    "install_lambda_api": "yarn --cwd src/lambda_api install",
+    "buildall": "yarn build && yarn build_lambda_api",
+    "installall": "yarn install && yarn install_lambda_api"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "roots": [
+      "<rootDir>/src"
+    ],
+    "testRegex": "(/tests/.*|(\\.|/)(test|spec))\\.[t]sx?$",
+    "testEnvironment": "node",
+    "testTimeout": 100000,
+    "moduleFileExtensions": [
+      "js",
+      "jsx",
+      "ts",
+      "tsx"
+    ],
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "transformIgnorePatterns": [
+      "/node_modules/(?!axios/.*)"
+    ]
+  },
+  "workspaces": [
+    "service"
+  ],
+  "dependencies": {
+    "@aws-sdk/client-bedrock-runtime": "^3.828.0",
+    "@aws-sdk/client-cloudformation": "^3.12.0",
+    "@aws-sdk/client-s3": "^3.828.0",
+    "@aws-sdk/types": "^3.78.0",
+    "@types/aws-lambda": "^8.10.114",
+    "aws-cdk": "^2.70.0",
+    "aws-cdk-lib": "^2.70.0",
+    "aws-lambda": "^1.0.7",
+    "aws-sdk": "^2.1692.0",
+    "constructs": "^10.1.291",
+    "http-status-codes": "^2.2.0",
+    "node-fetch": "^2.6.1",
+    "sha-1": "^1.0.0",
+    "source-map-support": "^0.5.16",
+    "swagger-cli": "^4.0.4"
+  },
+  "resolutions": {
+    "cloudevents": "4.0.1"
+  },
+  "devDependencies": {
+    "@aws-sdk/client-sns": "^3.180.0",
+    "@types/axios": "^0.14.0",
+    "@types/jest": "^29.5.12",
+    "@types/node": "^20.12.13",
+    "@types/node-fetch": "^2.5.10",
+    "@types/supertest": "^6.0.3",
+    "copyfiles": "^2.4.0",
+    "fs-extra": "^9.1.0",
+    "jest": "^29.7.0",
+    "lodash": "^4.17.21",
+    "supertest": "^7.1.1",
+    "ts-jest": "^29.1.4",
+    "ts-node": "^8.10.2",
+    "typescript": "^5.4.5"
+  }
+}

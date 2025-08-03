@@ -1,0 +1,58 @@
+on:
+    workflow_call:
+        inputs:
+            working-directory:
+                type: string
+                required: true
+
+            environment:
+                type: string
+                required: true
+
+            aws-region:
+                type: string
+                required: true
+
+defaults:
+    run:
+        shell: bash
+
+jobs:
+    cdk_deploy:
+        name: "Check CDK"
+        runs-on: ubuntu-latest
+        environment: ${{ inputs.environment }}
+        steps:
+            - name: "Checkout"
+              uses: actions/checkout@v4
+
+            - name: "Setup Node"
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 18
+
+            - name: "Setup CDK"
+              run: yarn global add aws-cdk
+
+            - name: "Print directory structure and file contents"
+              working-directory: ${{ inputs.working-directory }}
+              run: |
+                  echo "Directory structure and file contents:"
+                  ls -R
+
+            - name: "Install All Dependencies"
+              working-directory: ${{ inputs.working-directory }}
+              run: |
+                  echo "Installing all dependencies..."
+                  yarn installall
+
+            - name: "Build All Components"
+              working-directory: ${{ inputs.working-directory }}
+              run: |
+                  echo "Building all components..."
+                  yarn buildall
+
+            - name: "Synthesize"
+              working-directory: ${{ inputs.working-directory }}
+              run: |
+                  cdk synth || { echo "CDK synth failed"; exit 1; }

@@ -1,0 +1,85 @@
+on:
+    workflow_call:
+        inputs:
+            working-directory:
+                type: string
+                required: true
+
+            environment:
+                type: string
+                required: true
+
+            aws-region:
+                type: string
+                required: true
+
+        secrets:
+            AWS_ACCESS_KEY_ID:
+                required: true
+
+            AWS_SECRET_ACCESS_KEY:
+                required: true
+
+            MANAGEMENT_API_KEY:
+                required: true
+
+defaults:
+    run:
+        shell: bash
+
+jobs:
+    cdk_deploy:
+        name: "Deploy to AWS"
+        runs-on: ubuntu-latest
+        environment: ${{ inputs.environment }}
+        steps:
+            - name: "Checkout"
+              uses: actions/checkout@v4
+
+            - name: "Setup Node"
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 18
+
+            - name: "Setup CDK"
+              run: yarn global add aws-cdk
+
+            - name: "Install All Dependencies"
+              working-directory: ${{ inputs.working-directory }}
+              run: |
+                  yarn installall
+
+            - name: "Build All Components"
+              working-directory: ${{ inputs.working-directory }}
+              run: |
+                  yarn buildall
+              env:
+                  DEPLOYMENT_STAGE: ${{ inputs.environment }}
+
+            - name: "Clean CDK Output"
+              working-directory: ${{ inputs.working-directory }}
+              run: |
+                  rm -rf cdk.out
+
+            - name: "Synthesize Stack"
+              working-directory: ${{ inputs.working-directory }}
+              run: |
+                  cdk synth || { echo "CDK synth failed"; exit 1; }
+
+            - name: "Configure AWS Credentials"
+              uses: aws-actions/configure-aws-credentials@v4
+              with:
+                  aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+                  aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+                  aws-region: ${{ inputs.aws-region }}
+
+            - name: "Deploy Stack"
+              working-directory: ${{ inputs.working-directory }}
+              run: |
+                  export AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}
+                  export AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}
+                  export STAGE=${{ inputs.environment }}
+                  export REGION=${{ inputs.aws-region }}
+                  export MANAGEMENTAPIKEY=${{ secrets.MANAGEMENT_API_KEY }}
+
+                  yarn cdk deploy --require-approval never || { echo "CDK deploy failed"; exit 1; }
