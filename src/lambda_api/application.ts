@@ -37,8 +37,7 @@ async function handleEndpoint(req: Request, res: Response, endpoint: string) {
     logRequests(req);
 
     try {
-        console.log(`API request to ${endpoint}`);
-        const module = await import(`./${codepath}/${endpoint}`);
+        const module = await import(`./${codepath}/proxy`);
 
         let response;
         switch (req.method) {
