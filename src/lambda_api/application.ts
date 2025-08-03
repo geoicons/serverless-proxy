@@ -27,7 +27,7 @@ app.options("*", cors(corsOptions));
 
 const codepath = "application";
 
-app.all("/proxy/:path", async (req: Request, res: Response, next: NextFunction) => {
+app.all("/proxy/*", async (req: Request, res: Response, next: NextFunction) => {
     const endpoint = req.path.split("/")[1];
     await handleEndpoint(req, res, endpoint);
 });
