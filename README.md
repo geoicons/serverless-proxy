@@ -1,4 +1,4 @@
-# GEOICONS - SERVERLESS PROXY
+# SERVERLESS PROXY
 
 A serverless HTTP proxy service built with AWS CDK that provides a scalable, secure middleware layer for API routing and request processing. This application creates a Lambda-backed API Gateway that can route requests to different handler modules dynamically.
 
