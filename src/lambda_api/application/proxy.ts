@@ -14,6 +14,8 @@ export async function get(request: any) {
 
     // append the path
     let path = request.path;
+    // strip the proxy prefix from the path
+    path = path.replace("/proxy/", "");
     let url = `https://dog.ceo/api/${path}`;
 
     // dogs api
@@ -25,7 +27,9 @@ export async function get(request: any) {
         },
     };
 
+    console.log(axiosConfig);
     let dogsResponse = await axios(axiosConfig);
+    console.log(dogsResponse);
 
     return response;
 }
