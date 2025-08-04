@@ -62,11 +62,7 @@ async function handleEndpoint(req: Request, res: Response, endpoint: string) {
         if (response.status === 204) {
             res.status(204).end();
         } else {
-            response = removeSomeHeaders(response, true);
-            if (response.headers) res.set(response.headers);
-            if (response.type) res.type(response.type);
-            if (response.cache) res.set("Cache-Control", response.cache);
-            res.status(response.status).json(response);
+            res.status(response.status).send(response.data);
         }
     } catch (error: any) {
         console.error(`Error handling ${endpoint} request:`, error);
@@ -100,49 +96,4 @@ function logRequests(request: Request): boolean {
     console.log("Method: ", request.method);
 
     return true;
-}
-
-// we dont want certain headers from the backend being sent to the requestor.
-function removeSomeHeaders(response: any, all: boolean) {
-    const headersToRemove = [
-        "accept",
-        "accept-language",
-        "accept-encoding",
-        "access-control-allow-origin",
-        "cache-control",
-        "host",
-        "connection",
-        "pragma",
-        "sec-fetch-dest",
-        "sec-fetch-mode",
-        "sec-fetch-site",
-        "sec-ch-ua",
-        "sec-ch-ua-mobile",
-        "sec-ch-ua-platform",
-        "user-agent",
-        "upgrade-insecure-requests",
-        "x-forwarded-for",
-        "x-forwarded-proto",
-        "x-forwarded-port",
-        "x-amzn-trace-id",
-        "x-amzn-requestid",
-        "x-amzn-remapped-content-length",
-        "x-amz-apigw-id",
-        "x-powered-by",
-        "x-cache",
-        "x-amz-cf-pop",
-        "x-amz-cf-id",
-    ];
-
-    if (all) {
-        delete response.headers;
-    } else {
-        headersToRemove.forEach((header) => {
-            if (response.headers?.[header]) {
-                delete response.headers[header];
-            }
-        });
-    }
-
-    return response;
 }
