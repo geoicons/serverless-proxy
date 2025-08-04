@@ -1,6 +1,6 @@
 # SERVERLESS PROXY
 
-A serverless HTTP proxy service built with AWS CDK that provides a scalable, secure middleware layer for API routing and request processing. This application creates a Lambda-backed API Gateway that can route requests to different handler modules dynamically.
+A serverless HTTP proxy service built with AWS CDK that provides a scalable, secure middleware layer for API routing and request processing. This application creates a Lambda-backed API Gateway that can route requests to different handler modules dynamically. If you find this stack useful you might like to try our fully authenticated, globally distributed API Authentication proxy over at https://requestrocket.com. Early access registrations are available by https://app.requestrocket.com/
 
 ## 🏗️ Architecture
 
@@ -260,3 +260,18 @@ All responses follow the `expressResponseType` interface:
 ## 📄 License
 
 This project is licensed under the GNU General Public License v3.0 - see the LICENSE file for details.
+
+## About RequestRocket
+
+RequestRocket is a universal API proxy platform that simplifies authentication and makes API integration faster, easier, and more secure.
+
+Built for developers, data engineers, and business intelligence teams, RequestRocket transforms the way systems connect by abstracting away the complexity of API authentication protocols — from API Keys and OAuth2 to JWT and custom tokens.
+
+With a global serverless infrastructure, RequestRocket offers low-latency, high-availability API endpoints that handle retries, caching, telemetry, and even AI-driven just-in-time prefetching. It’s secure, scalable, and ready to plug into your stack — no matter how large or complex.
+
+Whether you're building a new SaaS product, integrating with dozens of enterprise APIs, or trying to securely connect business tools like Power BI to third-party data, RequestRocket is your authentication translation layer. Spend less time debugging tokens and more time building the things that matter.
+
+For Developers: Start Building Without the Headaches
+Join developers around the world using RequestRocket to simplify their API stack, reduce integration time, and ship faster. Create your free account and start building today.
+
+👉 Sign up now at https://app.requestrocket.com – It’s free to get started.
