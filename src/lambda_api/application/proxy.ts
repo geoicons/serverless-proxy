@@ -28,8 +28,8 @@ export async function get(request: any) {
     };
 
     console.log(axiosConfig);
-    let dogsResponse = await axios(axiosConfig);
-    console.log(dogsResponse);
+    response = await axios(axiosConfig);
+    console.log(response);
 
     return response;
 }
